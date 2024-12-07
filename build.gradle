@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.panyukovn'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId = 'com.panyukovn'
+            artifactId = 'logging-starter-gradle'
+            version = '1.0-SNAPSHOT'
+
+            pom {
+                name = 'Logging Starter Gradle'
+                description = 'Simple logging utility library'
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
