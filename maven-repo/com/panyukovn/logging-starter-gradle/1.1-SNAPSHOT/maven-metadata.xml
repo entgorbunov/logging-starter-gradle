@@ -3,26 +3,26 @@
   <groupId>com.panyukovn</groupId>
   <artifactId>logging-starter-gradle</artifactId>
   <versioning>
-    <lastUpdated>20241208141936</lastUpdated>
+    <lastUpdated>20241208143512</lastUpdated>
     <snapshot>
-      <timestamp>20241208.141936</timestamp>
-      <buildNumber>1</buildNumber>
+      <timestamp>20241208.143512</timestamp>
+      <buildNumber>2</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
-        <extension>jar</extension>
-        <value>1.1-20241208.141936-1</value>
-        <updated>20241208141936</updated>
-      </snapshotVersion>
-      <snapshotVersion>
         <extension>pom</extension>
-        <value>1.1-20241208.141936-1</value>
-        <updated>20241208141936</updated>
+        <value>1.1-20241208.143512-2</value>
+        <updated>20241208143512</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>module</extension>
-        <value>1.1-20241208.141936-1</value>
-        <updated>20241208141936</updated>
+        <value>1.1-20241208.143512-2</value>
+        <updated>20241208143512</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.1-20241208.143512-2</value>
+        <updated>20241208143512</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
