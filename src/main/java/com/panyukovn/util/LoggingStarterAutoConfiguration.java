@@ -1,7 +1,7 @@
 package com.panyukovn.util;
 
-public class Util {
-	private Util() {
+public class LoggingStarterAutoConfiguration {
+	private LoggingStarterAutoConfiguration() {
 	}
 
 	public static void println(String line) {
