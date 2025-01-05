@@ -3,11 +3,14 @@ package com.panyukovn;
 import com.panyukovn.aspect.LogExecutionAspect;
 import com.panyukovn.webfilter.WebLoggingFilter;
 import com.panyukovn.webfilter.WebLoggingRequestBodyAdvice;
+import com.panyukovn.webfilter.properties.WebLoggingProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
+@EnableConfigurationProperties(WebLoggingProperties.class)
 @ConditionalOnProperty(prefix = "logging", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class LoggingStarterAutoConfiguration {
 
@@ -19,8 +22,8 @@ public class LoggingStarterAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "logging.web-logging", value = "enabled", havingValue = "true", matchIfMissing = true)
-    public WebLoggingFilter webLoggingFilter() {
-        return new WebLoggingFilter();
+    public WebLoggingFilter webLoggingFilter(WebLoggingProperties webLoggingProperties) {
+        return new WebLoggingFilter(webLoggingProperties.getMaskedHeaders());
     }
 
     @Bean

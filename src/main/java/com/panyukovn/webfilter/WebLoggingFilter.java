@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -14,13 +13,20 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WebLoggingFilter extends HttpFilter {
 
     private static final Logger log = LoggerFactory.getLogger(WebLoggingFilter.class);
+    private static final String MASK = "******";
+    private final Set<String> maskedHeaders;
+
+    public WebLoggingFilter(Set<String> maskedHeaders) {
+        this.maskedHeaders = maskedHeaders;
+    }
+
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -43,7 +49,11 @@ public class WebLoggingFilter extends HttpFilter {
     }
 
     private String inlineHeaders(HttpServletRequest request) {
-        Map<String, String> headersMap = Collections.list(request.getHeaderNames()).stream().collect(Collectors.toMap(Function.identity(), request::getHeader));
+        Map<String, String> headersMap = Collections.list(request.getHeaderNames()).stream()
+            .collect(
+                Collectors.toMap(
+                    Function.identity(),
+                    headerName -> shouldMaskHeader(headerName) ? MASK : request.getHeader(headerName)));
 
         String inlineHeaders = headersMap.entrySet().stream().map(entry -> {
             String headerName = entry.getKey();
@@ -54,7 +64,7 @@ public class WebLoggingFilter extends HttpFilter {
         return "headers={" + inlineHeaders + "}";
     }
 
-    private static String formatQueryString(HttpServletRequest request) {
-        return Optional.ofNullable(request.getQueryString()).map(qs -> "?" + qs).orElse(Strings.EMPTY);
+    private boolean shouldMaskHeader(String headerName) {
+        return maskedHeaders.contains(headerName.toLowerCase());
     }
 }
