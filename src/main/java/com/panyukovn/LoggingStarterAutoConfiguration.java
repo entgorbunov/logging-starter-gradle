@@ -23,12 +23,14 @@ public class LoggingStarterAutoConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "logging.web-logging", value = "enabled", havingValue = "true", matchIfMissing = true)
     public WebLoggingFilter webLoggingFilter(WebLoggingProperties webLoggingProperties) {
-        return new WebLoggingFilter(webLoggingProperties.getMaskedHeaders());
+        return new WebLoggingFilter(
+            webLoggingProperties.getMaskedHeaders(),
+            webLoggingProperties.getExcludedPaths());
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "logging.web-logging", value = { "enabled", "log-body" }, havingValue = "true", matchIfMissing = true)
-    WebLoggingRequestBodyAdvice webLoggingRequestBodyAdvice() {
-        return new WebLoggingRequestBodyAdvice();
+    WebLoggingRequestBodyAdvice webLoggingRequestBodyAdvice(WebLoggingProperties webLoggingProperties) {
+        return new WebLoggingRequestBodyAdvice(webLoggingProperties.getExcludedPaths());
     }
 }

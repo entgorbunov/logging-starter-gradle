@@ -12,18 +12,34 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAd
 
 import java.lang.reflect.Type;
 import java.util.Optional;
+import java.util.Set;
 
 public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(WebLoggingRequestBodyAdvice.class);
+    private final Set<String> excludedPaths;
 
     @Autowired
     private HttpServletRequest request;
 
+    public WebLoggingRequestBodyAdvice(Set<String> excludedPaths) {
+        this.excludedPaths = excludedPaths;
+    }
+
     @Override
-    public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public Object afterBodyRead(
+        Object body,
+        HttpInputMessage inputMessage,
+        MethodParameter parameter,
+        Type targetType,
+        Class<? extends HttpMessageConverter<?>> converterType
+    ) {
         String method = request.getMethod();
         String requestURI = request.getRequestURI() + formatQueryString(request);
+
+        if (shouldSkipLogging(requestURI)) {
+            return body;
+        }
 
         log.info("Тело запроса: {} {} {}", method, requestURI, body);
 
@@ -37,5 +53,10 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     private String formatQueryString(HttpServletRequest request) {
         return Optional.ofNullable(request.getQueryString()).map(qs -> "?" + qs).orElse(Strings.EMPTY);
+    }
+
+    private boolean shouldSkipLogging(String requestURI) {
+        return excludedPaths.stream()
+            .anyMatch(path -> requestURI.startsWith(path) || requestURI.matches(path));
     }
 }

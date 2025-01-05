@@ -22,9 +22,11 @@ public class WebLoggingFilter extends HttpFilter {
     private static final Logger log = LoggerFactory.getLogger(WebLoggingFilter.class);
     private static final String MASK = "******";
     private final Set<String> maskedHeaders;
+    private final Set<String> excludedPaths;
 
-    public WebLoggingFilter(Set<String> maskedHeaders) {
+    public WebLoggingFilter(Set<String> maskedHeaders, Set<String> excludedPaths) {
         this.maskedHeaders = maskedHeaders;
+        this.excludedPaths = excludedPaths;
     }
 
 
@@ -33,6 +35,11 @@ public class WebLoggingFilter extends HttpFilter {
         String method = request.getMethod();
         String requestURI = request.getRequestURI();
         String headers = inlineHeaders(request);
+
+        if (shouldSkipLogging(requestURI)) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         log.info("Запрос: {} {} {}", method, requestURI, headers);
 
@@ -66,5 +73,21 @@ public class WebLoggingFilter extends HttpFilter {
 
     private boolean shouldMaskHeader(String headerName) {
         return maskedHeaders.contains(headerName.toLowerCase());
+    }
+
+    private boolean shouldSkipLogging(String requestURI) {
+        log.debug("Checking path: {}", requestURI);
+        log.debug("Excluded paths: {}", excludedPaths);
+
+        boolean shouldSkip = excludedPaths.stream()
+            .map(path -> path.replace("**", ".*"))  // заменяем wildcard ** на регулярное выражение .*
+            .anyMatch(pattern -> {
+                boolean matches = requestURI.matches(pattern);
+                log.debug("Checking pattern: {} against path: {} -> matches: {}", pattern, requestURI, matches);
+                return matches;
+            });
+
+        log.debug("Should skip logging: {}", shouldSkip);
+        return shouldSkip;
     }
 }

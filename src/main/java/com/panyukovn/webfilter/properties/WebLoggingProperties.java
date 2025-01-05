@@ -9,10 +9,19 @@ import java.util.Set;
 public class WebLoggingProperties {
 
     private Set<String> maskedHeaders = new HashSet<>();
+    private Set<String> excludedPaths = new HashSet<>();
 
     public WebLoggingProperties() {
         this.maskedHeaders.add("authorization");
         this.maskedHeaders.add("cookie");
+    }
+
+    public Set<String> getExcludedPaths() {
+        return excludedPaths;
+    }
+
+    public void setExcludedPaths(Set<String> excludedPaths) {
+        this.excludedPaths = excludedPaths;
     }
 
     public Set<String> getMaskedHeaders() {
