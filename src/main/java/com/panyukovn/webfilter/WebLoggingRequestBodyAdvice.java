@@ -17,13 +17,14 @@ import java.util.Set;
 public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(WebLoggingRequestBodyAdvice.class);
-    private final Set<String> excludedPaths;
+
+    private final LoggingSkipService loggingSkipService;
 
     @Autowired
     private HttpServletRequest request;
 
     public WebLoggingRequestBodyAdvice(Set<String> excludedPaths) {
-        this.excludedPaths = excludedPaths;
+        this.loggingSkipService = new LoggingSkipService(excludedPaths);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
         String method = request.getMethod();
         String requestURI = request.getRequestURI() + formatQueryString(request);
 
-        if (shouldSkipLogging(requestURI)) {
+        if (loggingSkipService.shouldSkipLogging(requestURI)) {
             return body;
         }
 
@@ -53,10 +54,5 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     private String formatQueryString(HttpServletRequest request) {
         return Optional.ofNullable(request.getQueryString()).map(qs -> "?" + qs).orElse(Strings.EMPTY);
-    }
-
-    private boolean shouldSkipLogging(String requestURI) {
-        return excludedPaths.stream()
-            .anyMatch(path -> requestURI.startsWith(path) || requestURI.matches(path));
     }
 }

@@ -29,8 +29,8 @@ public class LoggingStarterAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "logging.web-logging", value = { "enabled", "log-body" }, havingValue = "true", matchIfMissing = true)
-    WebLoggingRequestBodyAdvice webLoggingRequestBodyAdvice(WebLoggingProperties webLoggingProperties) {
+    @ConditionalOnProperty(prefix = "logging.web-logging", value = {"enabled", "log-body"}, havingValue = "true", matchIfMissing = true)
+    public WebLoggingRequestBodyAdvice webLoggingRequestBodyAdvice(WebLoggingProperties webLoggingProperties) {
         return new WebLoggingRequestBodyAdvice(webLoggingProperties.getExcludedPaths());
     }
 }
