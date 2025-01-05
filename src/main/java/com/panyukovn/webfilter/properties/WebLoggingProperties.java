@@ -1,6 +1,7 @@
 package com.panyukovn.webfilter.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.Set;
 
@@ -8,13 +9,13 @@ import java.util.Set;
 public class WebLoggingProperties {
 
     private Set<String> maskedHeaders = Set.of("authorization", "cookie");
-    private Set<String> excludedPaths = Set.of();
+    private Set<AntPathMatcher> excludedPaths = Set.of();
 
-    public Set<String> getExcludedPaths() {
+    public Set<AntPathMatcher> getExcludedPaths() {
         return excludedPaths;
     }
 
-    public void setExcludedPaths(Set<String> excludedPaths) {
+    public void setExcludedPaths(Set<AntPathMatcher> excludedPaths) {
         this.excludedPaths = excludedPaths;
     }
 

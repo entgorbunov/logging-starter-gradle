@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
 
 import java.lang.reflect.Type;
@@ -23,7 +24,7 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
     @Autowired
     private HttpServletRequest request;
 
-    public WebLoggingRequestBodyAdvice(Set<String> excludedPaths) {
+    public WebLoggingRequestBodyAdvice(Set<AntPathMatcher> excludedPaths) {
         this.loggingSkipService = new LoggingSkipService(excludedPaths);
     }
 
@@ -49,7 +50,8 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
+        String requestURI = request.getRequestURI() + formatQueryString(request);
+        return !loggingSkipService.shouldSkipLogging(requestURI);
     }
 
     private String formatQueryString(HttpServletRequest request) {

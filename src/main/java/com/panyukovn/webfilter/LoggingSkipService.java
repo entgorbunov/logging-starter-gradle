@@ -10,20 +10,18 @@ public class LoggingSkipService {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingSkipService.class);
 
-    private final AntPathMatcher pathMatcher = new AntPathMatcher();
-    private final Set<String> excludedPaths;
+    private final Set<AntPathMatcher> excludedPaths;
 
-    public LoggingSkipService(Set<String> excludedPaths) {
+    public LoggingSkipService(Set<AntPathMatcher> excludedPaths) {
         this.excludedPaths = excludedPaths;
-        log.debug("LoggingSkipService инициализирован с исключенными путями {}", excludedPaths);
     }
 
     public boolean shouldSkipLogging(String requestURI) {
         boolean shouldSkip = excludedPaths.stream()
-            .anyMatch(pattern -> pathMatcher.match(pattern, requestURI));
+            .anyMatch(matcher -> matcher.match(matcher.toString(), requestURI));
 
         if (shouldSkip) {
-            log.debug("URL {} пропущен согласно настройкам", requestURI);
+            log.debug("Логгирование для URL {} отключено настройками", requestURI);
         }
         return shouldSkip;
     }
