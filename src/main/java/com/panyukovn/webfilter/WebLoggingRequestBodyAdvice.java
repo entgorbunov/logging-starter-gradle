@@ -1,5 +1,6 @@
 package com.panyukovn.webfilter;
 
+import com.panyukovn.service.LoggingSkipService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
@@ -38,10 +39,6 @@ public class WebLoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
     ) {
         String method = request.getMethod();
         String requestURI = request.getRequestURI() + formatQueryString(request);
-
-        if (loggingSkipService.shouldSkipLogging(requestURI)) {
-            return body;
-        }
 
         log.info("Тело запроса: {} {} {}", method, requestURI, body);
 

@@ -1,5 +1,6 @@
 package com.panyukovn.webfilter;
 
+import com.panyukovn.service.LoggingSkipService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
@@ -7,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class WebLoggingFilter extends HttpFilter {
     private final Set<String> maskedHeaders;
     private final LoggingSkipService loggingSkipService;
 
-    public WebLoggingFilter(Set<String> maskedHeaders, Set<String> excludedPaths) {
+    public WebLoggingFilter(Set<String> maskedHeaders, Set<AntPathMatcher> excludedPaths) {
         this.maskedHeaders = maskedHeaders.stream()
             .map(String::toLowerCase)
             .collect(Collectors.toSet());

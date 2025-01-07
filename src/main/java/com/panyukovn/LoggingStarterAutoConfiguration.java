@@ -1,13 +1,17 @@
 package com.panyukovn;
 
 import com.panyukovn.aspect.LogExecutionAspect;
+import com.panyukovn.service.LoggingSkipService;
 import com.panyukovn.webfilter.WebLoggingFilter;
 import com.panyukovn.webfilter.WebLoggingRequestBodyAdvice;
-import com.panyukovn.webfilter.properties.WebLoggingProperties;
+import com.panyukovn.properties.WebLoggingProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.AntPathMatcher;
+
+import java.util.Set;
 
 @AutoConfiguration
 @EnableConfigurationProperties(WebLoggingProperties.class)
@@ -32,5 +36,10 @@ public class LoggingStarterAutoConfiguration {
     @ConditionalOnProperty(prefix = "logging.web-logging", value = {"enabled", "log-body"}, havingValue = "true", matchIfMissing = true)
     public WebLoggingRequestBodyAdvice webLoggingRequestBodyAdvice(WebLoggingProperties webLoggingProperties) {
         return new WebLoggingRequestBodyAdvice(webLoggingProperties.getExcludedPaths());
+    }
+
+    @Bean
+    public LoggingSkipService loggingSkipService(Set<AntPathMatcher> antPathMatchers) {
+        return new LoggingSkipService(antPathMatchers);
     }
 }

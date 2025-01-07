@@ -1,4 +1,4 @@
-package com.panyukovn.webfilter;
+package com.panyukovn.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.panyukovn.webfilter.properties;
+package com.panyukovn.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.AntPathMatcher;
