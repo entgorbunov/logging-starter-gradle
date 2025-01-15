@@ -1,0 +1,76 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.panyukovn",
+    "module": "logging-starter-gradle",
+    "version": "1.2-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "url": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "size": 3771,
+          "sha512": "0873f72703cde624b3581b888e48eb1ac330ceb5c65dc0cc7387198db44e8f0aed5b0d954f0cbfd6b6fa339dbade30769f460aae8ffb33b69f621be54bec704b",
+          "sha256": "262d2fc477e82e199db1cab3d91ae3c8b8da074760a3691395a887956e66069c",
+          "sha1": "d7e0377f9765f5f8962030a173356f78b5d196bf",
+          "md5": "23d22255062a0f13c09711a6ff143e12"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-web",
+          "version": {
+            "requires": "3.2.5"
+          }
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-aop",
+          "version": {
+            "requires": "3.2.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "url": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "size": 3771,
+          "sha512": "0873f72703cde624b3581b888e48eb1ac330ceb5c65dc0cc7387198db44e8f0aed5b0d954f0cbfd6b6fa339dbade30769f460aae8ffb33b69f621be54bec704b",
+          "sha256": "262d2fc477e82e199db1cab3d91ae3c8b8da074760a3691395a887956e66069c",
+          "sha1": "d7e0377f9765f5f8962030a173356f78b5d196bf",
+          "md5": "23d22255062a0f13c09711a6ff143e12"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.panyukovn",
+    "module": "logging-starter-gradle",
+    "version": "1.2-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "url": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "size": 11699,
+          "sha512": "9c23af28ef720d49225104f609335699a8040d2b2a1d975730ac31251d0c4bfacc0b9fdeebf10434ec4aacf5296d5d6b34394e6b63a813fa2a6fbdca795581bf",
+          "sha256": "aef283fcfa3756b64fc99268da72548e5148abaa7c2c7d12a6aa08727a2b0606",
+          "sha1": "c2e59bf566f3aa10edf2666b807ac4e1e46adcc7",
+          "md5": "db70f885d9cc7ad49429187d940530a6"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-web",
+          "version": {
+            "requires": "3.2.5"
+          }
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-aop",
+          "version": {
+            "requires": "3.2.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "url": "logging-starter-gradle-1.2-SNAPSHOT.jar",
+          "size": 11699,
+          "sha512": "9c23af28ef720d49225104f609335699a8040d2b2a1d975730ac31251d0c4bfacc0b9fdeebf10434ec4aacf5296d5d6b34394e6b63a813fa2a6fbdca795581bf",
+          "sha256": "aef283fcfa3756b64fc99268da72548e5148abaa7c2c7d12a6aa08727a2b0606",
+          "sha1": "c2e59bf566f3aa10edf2666b807ac4e1e46adcc7",
+          "md5": "db70f885d9cc7ad49429187d940530a6"
+        }
+      ]
+    }
+  ]
+}
